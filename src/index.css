@@ -11,10 +11,37 @@
 
 @layer components {
   .nav-item {
-    @apply text-2xl p-4
+    @apply p-4 text-2xl;
   }
 
   .active {
-    background-color: #d8d8d8;
+    @apply bg-[#d8d8d8];
+  }
+
+  .container {
+    @apply shadow-container m-3 w-full rounded-md p-5 font-bold;
+  }
+
+  .card {
+    @apply shadow-card flex w-full items-center justify-between rounded-lg bg-[#ebebeb] p-3;
+  }
+
+  .avatar {
+    @apply aspect-square w-1/2 max-w-[120px] rounded-full object-cover;
+  }
+
+  .card-info {
+    @apply ml-4 flex-grow;
+  }
+}
+
+@screen md {
+  .container,
+  .card {
+    width: calc(50% - 2rem);
+  }
+
+  .card {
+    @apply m-auto;
   }
 }
