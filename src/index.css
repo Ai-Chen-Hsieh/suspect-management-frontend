@@ -8,3 +8,13 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+
+@layer components {
+  .nav-item {
+    @apply text-2xl p-4
+  }
+
+  .active {
+    background-color: #d8d8d8;
+  }
+}
