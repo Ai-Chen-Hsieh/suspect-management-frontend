@@ -113,7 +113,7 @@ const MainContent = () => {
   ];
 
   return (
-    <main className="mx-auto my-6 flex max-w-[1300px] flex-wrap justify-between">
+    <main className="max-w-11/12 mx-auto my-6 flex flex-wrap justify-between">
       {contentList.map((content) => (
         <Container key={content.id} content={content}>
           {content.people.map((person) => (
