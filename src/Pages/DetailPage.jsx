@@ -40,13 +40,15 @@ const DetailPage = () => {
           <p className="mb-2 font-bold">Age: {crime.age}</p>
           <p className="mb-2 font-bold">Gender: {crime.gender}</p>
           <p className="mb-2 font-bold">
-            <span>Status: {crime.status}</span>
-            <select name="status" id="">
-              <option value="wanted">wanted</option>
-              <option value="wanted">arrested</option>
-              <option value="wanted">released</option>
-              <option value="wanted">normal</option>
-            </select>
+            <label>
+              Status:
+              <select name="status" defaultValue={crime.status}>
+                <option value="wanted">wanted</option>
+                <option value="arrest">arrested</option>
+                <option value="released">released</option>
+                <option value="normal">normal</option>
+              </select>
+            </label>
           </p>
           <p className="mb-2 font-bold">Risk level: {crime.level}</p>
           <p className="mb-2 font-bold">Arrest count: {crime.arrestCount}</p>
