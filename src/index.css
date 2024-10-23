@@ -15,7 +15,7 @@
   }
 
   .active {
-    @apply bg-[#d8d8d8];
+    @apply bg-active;
   }
 
   .container {
@@ -35,27 +35,27 @@
   }
 
   .primary-btn {
-    @apply bg-[#114466];
+    @apply bg-btnPrimary;
   }
 
   .secondary-btn {
-    @apply bg-[#b6b6b6];
+    @apply bg-btnSecondary;
   }
 
   .wanted {
-    background-color: #ffa07a;
+    @apply bg-orange;
   }
 
   .arrested {
-    background-color: #98fb98;
+    @apply bg-green;
   }
 
   .highRisk {
-    background-color: #ffd9ec;
+    @apply bg-pink;
   }
 
   .normal {
-    background: #e9e9e9;
+    @apply bg-primary;
   }
 }
 
