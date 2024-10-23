@@ -1,5 +1,8 @@
 import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
+
 const ListItem = ({ item }) => {
+  const navigate = useNavigate();
   return (
     <div
       className={clsx("flex rounded-lg px-3 py-5", {
@@ -25,7 +28,12 @@ const ListItem = ({ item }) => {
           <p className="mb-2">Risk level: {item.level}</p>
         </div>
         <div className="flex flex-col">
-          <button className="btn primary-btn mb-2">Detail</button>
+          <button
+            className="btn primary-btn mb-2"
+            onClick={() => navigate(`/detail/${item.id}`)}
+          >
+            Detail
+          </button>
           <button
             className="btn secondary-btn"
             disabled={item.level === "high" && item.status === "released"}
