@@ -1,20 +1,37 @@
+import clsx from "clsx";
 const ListItem = ({ item }) => {
   return (
-    <div className="flex rounded-lg bg-[#ebebeb] px-3 py-5">
+    <div
+      className={clsx("flex rounded-lg px-3 py-5", {
+        normal:
+          (item.status === "released" || item.status === "normal") &&
+          item.level === "low",
+        wanted: item.status === "wanted",
+        arrested: item.status === "arrested",
+        highRisk:
+          (item.status === "released" || item.status === "normal") &&
+          item.level === "high",
+      })}
+    >
       <img className="avatar" src={item.avatar} />
       <div className="ml-5 flex flex-grow justify-between gap-3 font-bold">
         <div>
-          <p>Name: {item.name}</p>
-          <p>Age: {item.age}</p>
+          <p className="mb-2">Name: {item.name}</p>
+          <p className="mb-2">Age: {item.age}</p>
           <p>Gender: {item.gender}</p>
         </div>
         <div>
-          <p>Status: {item.status}</p>
-          <p>Risk level: {item.level}</p>
+          <p className="mb-2">Status: {item.status}</p>
+          <p className="mb-2">Risk level: {item.level}</p>
         </div>
         <div className="flex flex-col">
-          <button className="btn primary-btn">Detail</button>
-          <button className="btn secondary-btn mt-1">Demote</button>
+          <button className="btn primary-btn mb-2">Detail</button>
+          <button
+            className="btn secondary-btn"
+            disabled={item.level === "high" && item.status === "released"}
+          >
+            Demote
+          </button>
         </div>
       </div>
     </div>

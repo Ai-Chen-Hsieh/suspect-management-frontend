@@ -46,6 +46,17 @@ const WatchListPage = () => {
       avatar:
         "https://fastly.picsum.photos/id/382/200/300.jpg?hmac=ql7Jj1WJu3zhhAn2p18Oxdn-JE1qZBR-lDF-MOVXCUA",
     },
+    {
+      id: 4,
+      name: "waterman",
+      age: 45,
+      gender: "man",
+      status: "released",
+      level: "high",
+      arrestCount: 5,
+      avatar:
+        "https://fastly.picsum.photos/id/382/200/300.jpg?hmac=ql7Jj1WJu3zhhAn2p18Oxdn-JE1qZBR-lDF-MOVXCUA",
+    },
   ];
   return (
     <section className="mx-auto w-5/12">
