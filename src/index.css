@@ -34,12 +34,12 @@
     @apply min-w-28 rounded-md px-4 py-2 text-white;
   }
 
-  .primary-btn {
+  .btn-primary {
     @apply bg-btnPrimary;
   }
 
-  .secondary-btn {
-    @apply bg-btnSecondary;
+  .btn-secondary {
+    @apply bg-primary;
   }
 
   .wanted {

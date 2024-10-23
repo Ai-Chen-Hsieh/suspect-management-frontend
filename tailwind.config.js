@@ -12,7 +12,6 @@ export default {
         primary: "#e9e9e9",
         active: "#d8d8d8",
         btnPrimary: "#114466",
-        btnSecondary: "#114466",
         orange: "#ffa07a",
         pink: "#ffd9ec",
         green: "#98fb98",

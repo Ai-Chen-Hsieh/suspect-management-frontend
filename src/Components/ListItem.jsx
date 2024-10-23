@@ -5,7 +5,7 @@ const ListItem = ({ item }) => {
   const navigate = useNavigate();
   return (
     <div
-      className={clsx("flex rounded-lg px-3 py-5", {
+      className={clsx("flex flex-wrap rounded-lg px-3 py-5", {
         normal:
           (item.status === "released" || item.status === "normal") &&
           item.level === "low",
@@ -17,7 +17,7 @@ const ListItem = ({ item }) => {
       })}
     >
       <img className="avatar" src={item.avatar} />
-      <div className="ml-5 flex flex-grow justify-between gap-3 font-bold">
+      <div className="ml-5 flex flex-grow flex-wrap justify-between gap-3 font-bold">
         <div>
           <p className="mb-2">Name: {item.name}</p>
           <p className="mb-2">Age: {item.age}</p>
@@ -29,13 +29,13 @@ const ListItem = ({ item }) => {
         </div>
         <div className="flex flex-col">
           <button
-            className="btn primary-btn mb-2"
+            className="btn btn-primary mb-2"
             onClick={() => navigate(`/detail/${item.id}`)}
           >
             Detail
           </button>
           <button
-            className="btn secondary-btn"
+            className="btn btn-secondary"
             disabled={item.level === "high" && item.status === "released"}
           >
             Demote
