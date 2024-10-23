@@ -1,34 +1,66 @@
 import Nav from "../Components/Nav";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+const navList = [
+  {
+    path: "/",
+    name: "Home",
+  },
+  {
+    path: "/",
+    name: "Active Case",
+  },
+  {
+    path: "/",
+    name: "Close Case",
+  },
+];
+
+const crime = {
+  id: 1,
+  name: "Sneakers",
+  age: 20,
+  gender: "male",
+  status: "arrested",
+  level: "high",
+  arrestCount: 10,
+  avatar:
+    "https://fastly.picsum.photos/id/382/200/300.jpg?hmac=ql7Jj1WJu3zhhAn2p18Oxdn-JE1qZBR-lDF-MOVXCUA",
+};
 
 const DetailPage = () => {
   const navigate = useNavigate();
-  const navList = [
-    {
-      path: "/",
-      name: "Home",
-    },
-    {
-      path: "/",
-      name: "Active Case",
-    },
-    {
-      path: "/",
-      name: "Close Case",
-    },
-  ];
+  const statusList = ["Wanted", "Arrested", "Released", "Normal"];
 
-  const crime = {
-    id: 1,
-    name: "Sneakers",
-    age: 20,
-    gender: "male",
-    status: "arrested",
-    level: "high",
-    arrestCount: 10,
-    avatar:
-      "https://fastly.picsum.photos/id/382/200/300.jpg?hmac=ql7Jj1WJu3zhhAn2p18Oxdn-JE1qZBR-lDF-MOVXCUA",
+  const [status, setStatus] = useState("Normal");
+  const [tempStatus, setTempStatus] = useState(status);
+
+  const getStatusOptions = (currentStatus) => {
+    switch (currentStatus) {
+      case "Normal":
+        return ["Normal", "Wanted"];
+      case "Wanted":
+        return ["Wanted", "Arrested"];
+      case "Arrested":
+        return ["Arrested", "Released"];
+      case "Released":
+        return ["Released", "Normal"];
+      default:
+        return statusList;
+    }
   };
+
+  const availableOptions = getStatusOptions(status);
+
+  function handleTempStatusChange(e) {
+    setTempStatus(e.target.value);
+  }
+
+  function save() {
+    setStatus(tempStatus);
+  }
+
   return (
     <section>
       <Nav list={navList}></Nav>
@@ -42,11 +74,16 @@ const DetailPage = () => {
           <p className="mb-2 font-bold">
             <label>
               Status:
-              <select name="status" defaultValue={crime.status}>
-                <option value="wanted">wanted</option>
-                <option value="arrest">arrested</option>
-                <option value="released">released</option>
-                <option value="normal">normal</option>
+              <select
+                name="status"
+                defaultValue={crime.status}
+                onChange={handleTempStatusChange}
+              >
+                {availableOptions.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </label>
           </p>
@@ -54,7 +91,9 @@ const DetailPage = () => {
           <p className="mb-2 font-bold">Arrest count: {crime.arrestCount}</p>
         </div>
         <div className="flex w-10/12 justify-end">
-          <button className="btn btn-primary mr-3">save</button>
+          <button className="btn btn-primary mr-3" onClick={save}>
+            save
+          </button>
           <button className="btn btn-primary" onClick={() => navigate(-1)}>
             back
           </button>
