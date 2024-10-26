@@ -8,12 +8,12 @@ const ListItem = ({ item }) => {
       className={clsx("flex flex-wrap rounded-lg px-3 py-5", {
         normal:
           (item.status === "released" || item.status === "normal") &&
-          item.level === "low",
+          item.arrestedCount < 10,
         wanted: item.status === "wanted",
         arrested: item.status === "arrested",
         highRisk:
           (item.status === "released" || item.status === "normal") &&
-          item.level === "high",
+          item.arrestedCount >= 10,
       })}
     >
       <img className="avatar" src={item.avatar} />
@@ -25,7 +25,9 @@ const ListItem = ({ item }) => {
         </div>
         <div>
           <p className="mb-2">Status: {item.status}</p>
-          <p className="mb-2">Risk level: {item.level}</p>
+          <p className="mb-2">
+            Risk level: {item.arrestedCount >= 10 ? "Hight" : "Low"}
+          </p>
         </div>
         <div className="flex flex-col">
           <button
@@ -36,7 +38,7 @@ const ListItem = ({ item }) => {
           </button>
           <button
             className="btn btn-secondary"
-            disabled={item.level === "high" && item.status === "released"}
+            disabled={item.arrestedCount >= 10 && item.status === "released"}
           >
             Demote
           </button>

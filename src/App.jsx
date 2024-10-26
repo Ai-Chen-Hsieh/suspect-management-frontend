@@ -4,8 +4,17 @@ import GeneralPage from "./Pages/GeneralPage";
 import MainContent from "./Components/MainContent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DetailPage from "./Pages/DetailPage";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchCrimes } from "./store/crime/crime.slice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCrimes());
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <Routes>

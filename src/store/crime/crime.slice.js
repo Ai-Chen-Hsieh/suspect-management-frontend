@@ -27,11 +27,32 @@ export const crimeSlice = createSlice({
   name: "crimesList",
   initialState: {
     data: initialStatus,
+    classifiedData: [],
     isLoading: true,
   },
   reducers: {
     changeStatus: (state, action) => {
       state.data = action.payload;
+    },
+    classify: (state) => {
+      const data = state.data;
+      const newData = { wanted: [], arrested: [], highRisk: [], custody: [] };
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].status === "wanted") {
+          newData.wanted.push(data[i]); // 使用點語法推入資料
+        } else if (data[i].status === "arrested") {
+          newData.arrested.push(data[i]);
+        } else if (
+          (data[i].status === "released" || data[i].status === "normal") &&
+          data[i].arrestedCount >= 10
+        ) {
+          newData.highRisk.push(data[i]);
+        } else {
+          newData.custody.push(data[i]);
+        }
+      }
+      state.classifiedData = newData;
     },
   },
   extraReducers: (builder) => {
@@ -43,6 +64,7 @@ export const crimeSlice = createSlice({
       .addCase(fetchCrimes.fulfilled, (state, action) => {
         state.data = action.payload;
         state.isLoading = false;
+        crimeSlice.caseReducers.classify(state);
       })
       .addCase(fetchCrimes.rejected, (state, action) => {
         state.error = action.error.message;
@@ -50,6 +72,6 @@ export const crimeSlice = createSlice({
   },
 });
 
-export const { changeStatus } = crimeSlice.actions;
+export const { changeStatus, classify } = crimeSlice.actions;
 
 export default crimeSlice.reducer;

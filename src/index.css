@@ -57,15 +57,21 @@
   .normal {
     @apply bg-primary;
   }
+
+  .cardContainer {
+    display: grid;
+    gap: 1rem;
+  }
 }
 
-@screen md {
-  .container,
-  .card {
+@screen lg {
+  .container {
     width: calc(50% - 2rem);
   }
 
-  .card {
-    @apply m-auto;
+  .cardContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 }
