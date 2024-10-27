@@ -1,6 +1,9 @@
 import Nav from "../Components/Nav";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { fetchCrimes } from "../store/crime/crime.slice";
 
 const navList = [
   {
@@ -17,55 +20,74 @@ const navList = [
   },
 ];
 
-const crime = {
-  id: 1,
-  name: "Sneakers",
-  age: 20,
-  gender: "male",
-  status: "arrested",
-  level: "high",
-  arrestCount: 10,
-  avatar:
-    "https://fastly.picsum.photos/id/382/200/300.jpg?hmac=ql7Jj1WJu3zhhAn2p18Oxdn-JE1qZBR-lDF-MOVXCUA",
-};
+const statusList = ["wanted", "arrested", "released", "normal"];
 
 const DetailPage = () => {
   const navigate = useNavigate();
-  const statusList = ["Wanted", "Arrested", "Released", "Normal"];
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const [status, setStatus] = useState("Normal");
-  const [tempStatus, setTempStatus] = useState(status);
+  const [crime, setCrime] = useState({});
+  const [status, setStatus] = useState("normal");
+  const [statusOptions, setStatusOptions] = useState(statusList);
 
   const getStatusOptions = (currentStatus) => {
     switch (currentStatus) {
-      case "Normal":
-        return ["Normal", "Wanted"];
-      case "Wanted":
-        return ["Wanted", "Arrested"];
-      case "Arrested":
-        return ["Arrested", "Released"];
-      case "Released":
-        return ["Released", "Normal"];
+      case "normal":
+        return ["normal", "wanted"];
+      case "wanted":
+        return ["wanted", "arrested"];
+      case "arrested":
+        return ["arrested", "released"];
+      case "released":
+        return ["released", "normal"];
       default:
         return statusList;
     }
   };
 
-  const availableOptions = getStatusOptions(status);
-
-  function handleTempStatusChange(e) {
-    setTempStatus(e.target.value);
+  function handleStatusChange(e) {
+    setStatus(e.target.value);
   }
 
   function save() {
-    setStatus(tempStatus);
+    axios
+      .put(`http://localhost:3000/suspect/${id}`, {
+        status: status,
+      })
+      .then((res) => {
+        setStatusOptions(getStatusOptions(res.data.status));
+        setCrime(res.data);
+        dispatch(fetchCrimes());
+      })
+      .catch((err) => console.log("err", err));
   }
+
+  useEffect(() => {
+    // 初始抓crime資料
+    const fetchCrimeDetail = async () => {
+      axios
+        .get(`http://localhost:3000/suspect/${id}`)
+        .then((res) => {
+          setCrime(res.data);
+          return res.data;
+        })
+        .then((data) => {
+          setStatusOptions(getStatusOptions(data.status));
+        })
+        .catch((err) => console.log("err", err));
+    };
+
+    if (id) {
+      fetchCrimeDetail();
+    }
+  }, [id]);
 
   return (
     <section>
       <Nav list={navList}></Nav>
       <h2 className="my-6 text-center text-2xl">Crime Detail</h2>
-      <div className="bg-primary mx-auto my-6 flex max-w-xl flex-col items-center justify-between pb-6 pt-3">
+      <div className="mx-auto my-6 flex max-w-xl flex-col items-center justify-between bg-primary pb-6 pt-3">
         <img className="avatar mt-3" src={crime.avatar} alt="" />
         <div className="mb-4 mt-4 w-10/12 border-2 border-solid border-slate-400 py-3 text-center">
           <p className="mb-2 font-bold">Name: {crime.name}</p>
@@ -76,10 +98,10 @@ const DetailPage = () => {
               Status:
               <select
                 name="status"
-                defaultValue={crime.status}
-                onChange={handleTempStatusChange}
+                value={status}
+                onChange={handleStatusChange}
               >
-                {availableOptions.map((item, index) => (
+                {statusOptions.map((item, index) => (
                   <option key={index} value={item}>
                     {item}
                   </option>
@@ -87,8 +109,10 @@ const DetailPage = () => {
               </select>
             </label>
           </p>
-          <p className="mb-2 font-bold">Risk level: {crime.level}</p>
-          <p className="mb-2 font-bold">Arrest count: {crime.arrestCount}</p>
+          <p className="mb-2 font-bold">
+            Risk level: {crime.arrestCount >= 10 ? "High" : "Low"}
+          </p>
+          <p className="mb-2 font-bold">Arrest count: {crime.arrestedCount}</p>
         </div>
         <div className="flex w-10/12 justify-end">
           <button className="btn btn-primary mr-3" onClick={save}>

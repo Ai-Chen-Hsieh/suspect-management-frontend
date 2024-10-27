@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 const Card = ({ person }) => {
   const navigate = useNavigate();
   return (
-    <div className="card" onClick={() => navigate(`/detail/${person.id}`)}>
+    <div className="card" onClick={() => navigate(`/detail/${person._id}`)}>
       <img src={person.avatar} alt="" className="avatar" />
       <div className="ml-4 flex-grow">
         <p>Name: {person.name}</p>
