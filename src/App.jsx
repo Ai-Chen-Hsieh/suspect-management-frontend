@@ -7,6 +7,7 @@ import DetailPage from "./Pages/DetailPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchCrimes } from "./store/crime/crime.slice";
+import { ToastContainer } from "./utility/toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="*" element={<HomePage />}>
           <Route index element={<MainContent />}></Route>

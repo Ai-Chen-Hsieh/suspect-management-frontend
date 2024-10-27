@@ -1,8 +1,15 @@
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
+import { notify } from "../utility/toast";
 
 const ListItem = ({ item }) => {
   const navigate = useNavigate();
+
+  function handleClick() {
+    notify("Demotion Successful !", "success");
+    console.log("click", item.status);
+  }
+
   return (
     <div
       className={clsx("flex flex-wrap rounded-lg px-3 py-5", {
@@ -32,13 +39,18 @@ const ListItem = ({ item }) => {
         <div className="flex flex-col">
           <button
             className="btn btn-primary mb-2"
-            onClick={() => navigate(`/detail/${item.id}`)}
+            onClick={() => navigate(`/detail/${item._id}`)}
           >
             Detail
           </button>
           <button
-            className="btn btn-secondary"
-            disabled={item.arrestedCount >= 10 && item.status === "released"}
+            className="btn btn-secondary mb-2"
+            disabled={
+              item.status === "wanted" ||
+              (item.status === "released" && item.arrestedCount >= 10) ||
+              item.status === "arrested"
+            }
+            onClick={handleClick}
           >
             Demote
           </button>
