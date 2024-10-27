@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchCrimes } from "../store/crime/crime.slice";
 import { notify } from "../utility/toast";
-import { editSuspect, getSuspect } from "../api/api/api";
+import { editSuspect, getSuspect } from "../api/api";
 
 const navList = [
   {

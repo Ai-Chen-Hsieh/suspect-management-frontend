@@ -5,7 +5,6 @@ const handleApiError = (error) => {
 };
 
 export const editSuspect = async (id, data) => {
-  console.log("api", data);
   try {
     const response = await axiosInstance.put(`/suspect/${id}`, data);
     return response.data;

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { notify } from "../utility/toast";
-import { editSuspect } from "../api/api/api";
+import { editSuspect } from "../api/api";
 import { fetchCrimes } from "../store/crime/crime.slice";
 
 const ListItem = ({ item, isGeneral }) => {
