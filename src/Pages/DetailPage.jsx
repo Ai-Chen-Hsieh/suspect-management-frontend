@@ -2,8 +2,9 @@ import Nav from "../Components/Nav";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { fetchCrimes } from "../store/crime/crime.slice";
+import { notify } from "../utility/toast";
+import { editSuspect, getSuspect } from "../api/api/api";
 
 const navList = [
   {
@@ -32,6 +33,7 @@ const DetailPage = () => {
   const [statusOptions, setStatusOptions] = useState(statusList);
 
   const getStatusOptions = (currentStatus) => {
+    console.log("currentStatus", currentStatus);
     switch (currentStatus) {
       case "normal":
         return ["normal", "wanted"];
@@ -50,32 +52,30 @@ const DetailPage = () => {
     setStatus(e.target.value);
   }
 
-  function save() {
-    axios
-      .put(`http://localhost:3000/suspect/${id}`, {
-        status: status,
-      })
-      .then((res) => {
-        setStatusOptions(getStatusOptions(res.data.status));
-        setCrime(res.data);
-        dispatch(fetchCrimes());
-      })
-      .catch((err) => console.log("err", err));
+  async function save() {
+    try {
+      const data = await editSuspect(id, crime);
+      notify("Successfully Updated", "success");
+      setCrime(data);
+      setStatusOptions(getStatusOptions(data.status));
+      dispatch(fetchCrimes());
+    } catch (error) {
+      notify("Failed to load crime data", "error");
+      console.log("error", error);
+    }
   }
 
   useEffect(() => {
     // 初始抓crime資料
     const fetchCrimeDetail = async () => {
-      axios
-        .get(`http://localhost:3000/suspect/${id}`)
-        .then((res) => {
-          setCrime(res.data);
-          return res.data;
-        })
-        .then((data) => {
-          setStatusOptions(getStatusOptions(data.status));
-        })
-        .catch((err) => console.log("err", err));
+      try {
+        const result = await getSuspect(id);
+        console.log("result", result);
+        setCrime(result);
+        setStatusOptions(getStatusOptions(result.status));
+      } catch (error) {
+        console.log("error", error);
+      }
     };
 
     if (id) {
