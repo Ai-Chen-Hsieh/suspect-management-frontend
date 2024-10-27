@@ -1,14 +1,55 @@
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { notify } from "../utility/toast";
+import { editSuspect } from "../api/api/api";
+import { fetchCrimes } from "../store/crime/crime.slice";
 
-const ListItem = ({ item }) => {
+const ListItem = ({ item, isGeneral }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  function handleClick() {
-    notify("Demotion Successful !", "success");
-    console.log("click", item.status);
+  async function handleClick(message) {
+    try {
+      await editSuspect(item._id, {
+        ...item,
+        priority: !item.priority,
+      });
+      notify(`${message} Successful !`, "success");
+      dispatch(fetchCrimes());
+    } catch (error) {
+      notify("Failed to load crime data", "error");
+      console.log("error", error);
+    }
   }
+
+  const renderButton = () => {
+    if (isGeneral) {
+      return (
+        <button
+          className="btn btn-primary mb-2"
+          onClick={() => handleClick("Promote")}
+        >
+          Promote
+        </button>
+      );
+    } else {
+      const isDisabled =
+        item.status === "wanted" ||
+        (item.status === "released" && item.arrestedCount >= 10) ||
+        item.status === "arrested";
+
+      return (
+        <button
+          className="btn btn-secondary mb-2"
+          disabled={isDisabled}
+          onClick={() => handleClick("Demote")}
+        >
+          Demote
+        </button>
+      );
+    }
+  };
 
   return (
     <div
@@ -43,17 +84,7 @@ const ListItem = ({ item }) => {
           >
             Detail
           </button>
-          <button
-            className="btn btn-secondary mb-2"
-            disabled={
-              item.status === "wanted" ||
-              (item.status === "released" && item.arrestedCount >= 10) ||
-              item.status === "arrested"
-            }
-            onClick={handleClick}
-          >
-            Demote
-          </button>
+          {renderButton()}
         </div>
       </div>
     </div>

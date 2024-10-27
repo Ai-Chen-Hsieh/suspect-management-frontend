@@ -11,7 +11,7 @@ const GeneralPage = () => {
       <h2 className="mb-4 text-center text-2xl">General list</h2>
       <List>
         {list.map((item) => (
-          <ListItem key={item._id} item={item} />
+          <ListItem key={item._id} item={item} isGeneral={true} />
         ))}
       </List>
     </section>

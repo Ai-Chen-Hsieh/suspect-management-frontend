@@ -11,7 +11,7 @@ const WatchListPage = () => {
       <h2 className="mb-4 text-center text-2xl">Priority Watchlist</h2>
       <List>
         {list.map((item) => (
-          <ListItem key={item._id} item={item}></ListItem>
+          <ListItem key={item._id} item={item} isGeneral={false}></ListItem>
         ))}
       </List>
     </section>
