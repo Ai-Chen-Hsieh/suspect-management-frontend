@@ -12,7 +12,6 @@ const ListItem = ({ item, isGeneral }) => {
   async function handleClick(message) {
     try {
       await editSuspect(item._id, {
-        ...item,
         priority: !item.priority,
       });
       notify(`${message} Successful !`, "success");

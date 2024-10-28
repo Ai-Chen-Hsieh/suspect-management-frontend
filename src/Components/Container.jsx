@@ -2,7 +2,7 @@ const Container = ({ children, title, count }) => {
   return (
     <div className="container px-4">
       <div className="flex justify-between">
-        <h2 className="flex w-full justify-between text-xl">
+        <h2 className="mb-4 flex w-full justify-between text-xl">
           <span>{title}</span>
           <span>Quantity: {count}</span>
         </h2>

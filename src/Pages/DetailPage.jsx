@@ -33,7 +33,6 @@ const DetailPage = () => {
   const [statusOptions, setStatusOptions] = useState(statusList);
 
   const getStatusOptions = (currentStatus) => {
-    console.log("currentStatus", currentStatus);
     switch (currentStatus) {
       case "normal":
         return ["normal", "wanted"];
@@ -54,7 +53,7 @@ const DetailPage = () => {
 
   async function save() {
     try {
-      const data = await editSuspect(id, crime);
+      const data = await editSuspect(id, { status });
       notify("Successfully Updated", "success");
       setCrime(data);
       setStatusOptions(getStatusOptions(data.status));
@@ -70,8 +69,8 @@ const DetailPage = () => {
     const fetchCrimeDetail = async () => {
       try {
         const result = await getSuspect(id);
-        console.log("result", result);
         setCrime(result);
+        setStatus(result.status);
         setStatusOptions(getStatusOptions(result.status));
       } catch (error) {
         console.log("error", error);
