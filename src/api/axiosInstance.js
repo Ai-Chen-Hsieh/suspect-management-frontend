@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const url = "http://localhost:3000";
+export const url = "https://suspect-management-backend.vercel.app/";
 
 const axiosInstance = axios.create({
   baseURL: url,
