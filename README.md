@@ -1,18 +1,30 @@
+# 專案名稱
 
-# Suspect management system 嫌疑犯管理清單
+## 介紹
+
+> 這是一個犯罪嫌疑人管理系統的前端，使用 React 及 Redux 構建，用於顯示和更新嫌疑人資料，包括身份、狀態和風險等級。
+
+## 技術
+
+- **React** 
+- **Redux** 
+- **React-router-dom**
+- **Tailwind CSS** 
+- **Axios**
+- **Vite**
+- **react-loading-skeleton**
+- **Vercel**
 
 
-### 使用技術
-  - React 18 
-  - Redux/Redux-toolkit
-  - React-router-dom v6
-  - react-loading-skeleton
-  - vite
-  - vercel 部署
-  - axios
+
+## 安裝與啟動
+ **Clone 專案**
+   ```
+   git clone https://github.com/Ai-Chen-Hsieh/suspect-management-frontend.git
+   ```
 
 
-## demo 
+## Website 
 [website](https://suspect-management-frontend.vercel.app/)
 
 ## 畫面
