@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { fetchCrimes } from "../store/crime/crime.slice";
 import { notify } from "../utility/toast";
 import { editSuspect, getSuspect } from "../api/api";
-
+import DetailPageSkeleton from "./DetailPageSkeleton";
 const navList = [
   {
     path: "/",
@@ -28,6 +28,7 @@ const DetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [crime, setCrime] = useState({});
   const [status, setStatus] = useState("normal");
   const [statusOptions, setStatusOptions] = useState(statusList);
@@ -72,6 +73,7 @@ const DetailPage = () => {
         setCrime(result);
         setStatus(result.status);
         setStatusOptions(getStatusOptions(result.status));
+        setIsLoading(false);
       } catch (error) {
         console.log("error", error);
       }
@@ -80,48 +82,54 @@ const DetailPage = () => {
     if (id) {
       fetchCrimeDetail();
     }
-  }, [id]);
+  }, [id, isLoading]);
 
   return (
     <section>
       <Nav list={navList}></Nav>
       <h2 className="my-6 text-center text-2xl">Crime Detail</h2>
-      <div className="mx-auto my-6 flex max-w-xl flex-col items-center justify-between bg-primary pb-6 pt-3">
-        <img className="avatar mt-3" src={crime.avatar} alt="" />
-        <div className="mb-4 mt-4 w-10/12 border-2 border-solid border-slate-400 py-3 text-center">
-          <p className="mb-2 font-bold">Name: {crime.name}</p>
-          <p className="mb-2 font-bold">Age: {crime.age}</p>
-          <p className="mb-2 font-bold">Gender: {crime.gender}</p>
-          <p className="mb-2 font-bold">
-            <label>
-              Status:
-              <select
-                name="status"
-                value={status}
-                onChange={handleStatusChange}
-              >
-                {statusOptions.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </p>
-          <p className="mb-2 font-bold">
-            Risk level: {crime.arrestCount >= 10 ? "High" : "Low"}
-          </p>
-          <p className="mb-2 font-bold">Arrest count: {crime.arrestedCount}</p>
+      {isLoading ? (
+        <DetailPageSkeleton />
+      ) : (
+        <div className="mx-auto my-6 flex max-w-xl flex-col items-center justify-between bg-primary pb-6 pt-3">
+          <img className="avatar mt-3" src={crime.avatar} alt="" />
+          <div className="mb-4 mt-4 w-10/12 border-2 border-solid border-slate-400 py-3 text-center">
+            <p className="mb-2 font-bold">Name: {crime.name}</p>
+            <p className="mb-2 font-bold">Age: {crime.age}</p>
+            <p className="mb-2 font-bold">Gender: {crime.gender}</p>
+            <p className="mb-2 font-bold">
+              <label>
+                Status:
+                <select
+                  name="status"
+                  value={status}
+                  onChange={handleStatusChange}
+                >
+                  {statusOptions.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </p>
+            <p className="mb-2 font-bold">
+              Risk level: {crime.arrestCount >= 10 ? "High" : "Low"}
+            </p>
+            <p className="mb-2 font-bold">
+              Arrest count: {crime.arrestedCount}
+            </p>
+          </div>
+          <div className="flex w-10/12 justify-end">
+            <button className="btn btn-primary mr-3" onClick={save}>
+              save
+            </button>
+            <button className="btn btn-primary" onClick={() => navigate(-1)}>
+              back
+            </button>
+          </div>
         </div>
-        <div className="flex w-10/12 justify-end">
-          <button className="btn btn-primary mr-3" onClick={save}>
-            save
-          </button>
-          <button className="btn btn-primary" onClick={() => navigate(-1)}>
-            back
-          </button>
-        </div>
-      </div>
+      )}
     </section>
   );
 };
