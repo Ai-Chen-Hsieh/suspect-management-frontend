@@ -1,8 +1,25 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Suspect management system 嫌疑犯管理清單
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 使用技術
+  - React 18 
+  - Redux/Redux-toolkit
+  - React-router-dom v6
+  - react-loading-skeleton
+  - vite
+  - vercel 部署
+  - axios
+
+
+## demo 
+[website](https://suspect-management-frontend.vercel.app/)
+
+## 畫面
+![home](https://github.com/Ai-Chen-Hsieh/suspect-management-frontend/blob/main/public/assets/home.png)
+![watchlist](https://github.com/Ai-Chen-Hsieh/suspect-management-frontend/blob/main/public/assets/watchlist.png)
+![home](https://github.com/Ai-Chen-Hsieh/suspect-management-frontend/blob/main/public/assets/detail.png)
+
+
+
+
